@@ -1,30 +1,36 @@
 
 #include "PerceptronSimple.h"
 
+#include <iostream>
 
-PerceptronSimple::PerceptronSimple(): m_tailleDataset(0), m_nbEntrees(0), m_nbSorties(0), m_nbErreurs(0), m_nbItMax(10000), m_tauxApprentissage(0.1), m_entrees(
-        nullptr), m_poids(nullptr), m_sorties(nullptr) {
+
+PerceptronSimple::PerceptronSimple(): m_tailleDataset(0), m_nbEntrees(0), m_nbSorties(0), m_nbErreurs(0), m_nbItMax(10000), m_nbIterations(0), m_tauxApprentissage(0.1), m_entrees(
+                                          nullptr), m_poids(nullptr), m_sorties(nullptr) {
 
 }
 
 void PerceptronSimple::setEntrees(std::vector<std::vector<int> *> *entrees) {
     m_entrees = entrees;
+    m_tailleDataset = entrees->size();
+    m_nbEntrees = entrees->at(0)->size();
 }
 
 void PerceptronSimple::setSorties(std::vector<int> *sorties) {
     m_sorties = sorties;
+    m_nbSorties = sorties->size();
 }
 
 void PerceptronSimple::initPoids() {
     m_poids = new std::vector<float>(m_nbEntrees + 1, 0);
+    std::cout << m_poids->size();
 }
 
 void PerceptronSimple::execAlgo() {
     initPoids();
 
-    int nbIterations = 0;
+    m_nbIterations = 0;
     do {
-        nbIterations++;
+        m_nbIterations++;
         m_nbErreurs = 0;
 
         for (int i = 0; i < m_tailleDataset; i++) {
@@ -40,7 +46,7 @@ void PerceptronSimple::execAlgo() {
 
 
         }
-    } while (m_nbErreurs || nbIterations > m_nbItMax);
+    } while (m_nbErreurs || m_nbIterations > m_nbItMax);
 
 }
 
@@ -83,5 +89,9 @@ void PerceptronSimple::setTauxApprentissage(float taux) {
 
 std::vector<float> *PerceptronSimple::getPoids() {
     return m_poids;
+}
+
+int PerceptronSimple::getNbIterations() const {
+    return m_nbIterations;
 }
 

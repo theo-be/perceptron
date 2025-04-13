@@ -11,6 +11,7 @@ public:
     PerceptronSimple();
 
     std::vector<float> *getPoids();
+    int getNbIterations() const;
 
     void setEntrees(std::vector<std::vector<int>*> *);
     void setSorties(std::vector<int>*);
@@ -36,6 +37,7 @@ private:
 
     int m_nbErreurs;
     int m_nbItMax;
+    int m_nbIterations;
     float m_tauxApprentissage;
 
     std::vector<std::vector<int>*> *m_entrees;
